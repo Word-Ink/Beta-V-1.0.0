@@ -1,0 +1,38 @@
+---
+import { docsNav } from "../lib/docs-nav";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/docs";
+---
+
+<nav class="text-sm">
+  {
+    docsNav.map((section) => (
+      <div class="mb-6">
+        <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-mute-2 mb-2 px-3">
+          {section.title}
+        </p>
+        <ul class="space-y-px">
+          {section.pages.map((page) => {
+            const isActive =
+              currentPath === page.href.replace(/\/$/, "");
+            return (
+              <li>
+                <a
+                  href={page.href}
+                  class:list={[
+                    "block px-3 py-1.5 rounded-md transition-colors text-sm",
+                    isActive
+                      ? "text-brand bg-brand/10 font-medium"
+                      : "text-mute hover:text-ink hover:bg-surface/40",
+                  ]}
+                >
+                  {page.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))
+  }
+</nav>

@@ -1,0 +1,203 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const code = `import { useState } from "react";
+import { useEditor, Editor, Toolbar } from "@/components/editor";
+
+const BLOCK_OPTIONS = [
+  { value: "p",          label: "Paragraph" },
+  { value: "h1",         label: "Heading 1" },
+  { value: "h2",         label: "Heading 2" },
+  { value: "h3",         label: "Heading 3" },
+  { value: "blockquote", label: "Quote" },
+  { value: "pre",        label: "Code block" },
+];
+
+export function BlogPostEditor() {
+  const [html, setHtml] = useState("");
+  const editor = useEditor({
+    value: html,
+    onChange: setHtml,
+    placeholder: "Start writing your post…",
+    minRows: 16,
+  });
+
+  return (
+    <Editor instance={editor}>
+      <Toolbar>
+        <Toolbar.Dropdown cmd="formatBlock" options={BLOCK_OPTIONS} />
+        <Toolbar.Separator />
+        <Toolbar.Group>
+          <Toolbar.Button cmd="bold" />
+          <Toolbar.Button cmd="italic" />
+          <Toolbar.Button cmd="underline" />
+          <Toolbar.Button cmd="code" />
+        </Toolbar.Group>
+        <Toolbar.Separator />
+        <Toolbar.ColorPicker cmd="foreColor" />
+        <Toolbar.ColorPicker cmd="backColor" />
+        <Toolbar.Separator />
+        <Toolbar.Button cmd="insertUnorderedList" />
+        <Toolbar.Button cmd="insertOrderedList" />
+        <Toolbar.Button cmd="formatBlock" value="blockquote" />
+        <Toolbar.Separator />
+        <Toolbar.Button cmd="link" />
+        <Toolbar.Button cmd="image" />
+        <Toolbar.Button cmd="horizontalRule" />
+        <Toolbar.Separator />
+        <Toolbar.Button cmd="undo" />
+        <Toolbar.Button cmd="redo" />
+      </Toolbar>
+
+      <Editor.Content />
+
+      <Editor.Footer>
+        {({ words, chars }) => (
+          <span>{words} words · {chars} characters</span>
+        )}
+      </Editor.Footer>
+    </Editor>
+  );
+}`;
+---
+
+<BaseLayout
+  title="Blog post editor — wordink examples"
+  description="A full-featured editor template optimised for long-form writing."
+>
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-20 pb-8">
+    <a
+      href="/examples"
+      class="text-mute hover:text-ink text-sm font-mono mb-6 inline-flex items-center gap-2 transition-colors"
+    >
+      ← Examples
+    </a>
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-3">
+      Template
+    </p>
+    <h1
+      class="text-5xl font-semibold tracking-tighter mb-4 leading-tight"
+    >
+      Blog post editor
+    </h1>
+    <p class="text-lg text-mute max-w-2xl leading-relaxed">
+      The full toolbar — headings, lists, color, links, images, code blocks.
+      Built for long-form writing where every formatting affordance matters.
+    </p>
+  </section>
+
+  <!-- Mockup -->
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pb-12">
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-4">
+      Preview
+    </p>
+    <div class="border border-line rounded-lg overflow-hidden bg-bg">
+      <!-- Toolbar -->
+      <div
+        class="flex items-center gap-1 p-2 border-b border-line bg-surface/60 flex-wrap"
+      >
+        <button
+          class="px-3 py-1.5 rounded text-sm bg-surface-2 border border-line text-mute hover:text-ink font-mono"
+          >Heading 2</button
+        >
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button
+          class="w-8 h-8 rounded text-sm font-bold hover:bg-surface flex items-center justify-center"
+          >B</button
+        >
+        <button
+          class="w-8 h-8 rounded text-sm italic hover:bg-surface flex items-center justify-center"
+          >I</button
+        >
+        <button
+          class="w-8 h-8 rounded text-sm underline hover:bg-surface flex items-center justify-center"
+          >U</button
+        >
+        <button
+          class="w-8 h-8 rounded text-sm font-mono hover:bg-surface flex items-center justify-center"
+          >{"<>"}</button
+        >
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded hover:bg-surface flex items-center justify-center">
+          <span class="w-4 h-4 rounded-sm bg-brand"></span>
+        </button>
+        <button class="w-8 h-8 rounded hover:bg-surface flex items-center justify-center">
+          <span class="w-4 h-4 rounded-sm bg-[#f59e0b]"></span>
+        </button>
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="6" r="1.2"/><line x1="9" y1="6" x2="20" y2="6"/><circle cx="5" cy="12" r="1.2"/><line x1="9" y1="12" x2="20" y2="12"/><circle cx="5" cy="18" r="1.2"/><line x1="9" y1="18" x2="20" y2="18"/></svg>
+        </button>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center font-mono text-[10px]">1.</button>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center font-mono text-base">"</button>
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+        </button>
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="p-10 max-w-3xl mx-auto">
+        <h1 class="text-4xl font-bold tracking-tight text-ink mb-3 leading-tight">
+          The case for owning your editor
+        </h1>
+        <p class="text-mute-2 text-sm font-mono mb-8">May 21, 2026 · 8 min read</p>
+
+        <p class="text-ink leading-relaxed mb-4 text-[17px]">
+          Most rich-text editors are libraries you depend on. <strong>wordink</strong> is
+          a folder you own. The difference matters more than it sounds.
+        </p>
+
+        <p class="text-ink leading-relaxed mb-6 text-[17px]">
+          When you ship an editor as a copy-paste library — like Shadcn does for
+          components — the user gets <em>source code, not abstractions</em>. They can
+          change anything.
+        </p>
+
+        <h2 class="text-2xl font-semibold tracking-tight text-ink mt-10 mb-4">
+          Why this matters
+        </h2>
+        <p class="text-ink leading-relaxed mb-4 text-[17px]">
+          Editors are <a class="text-brand underline underline-offset-4 decoration-brand/40">deceptively complex</a>.
+          Even simple ones like Slate and Tiptap accrete behaviours over time —
+          paste handling, selection edge cases, browser quirks.
+        </p>
+
+        <blockquote class="border-l-2 border-brand pl-4 py-1 my-6 text-mute italic text-[17px]">
+          The best abstraction is the one you can delete.
+        </blockquote>
+
+        <h2 class="text-2xl font-semibold tracking-tight text-ink mt-10 mb-4">
+          A small example
+        </h2>
+        <pre class="bg-surface border border-line rounded-md p-4 text-xs font-mono text-ink mb-4 overflow-x-auto"><code><span class="text-mute-2">const</span> editor = <span class="text-brand">useEditor</span>(&#123; value, onChange &#125;);</code></pre>
+
+        <p class="text-mute-2 text-sm font-mono">
+          <span class="text-brand">|</span>
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-10 py-3 border-t border-line bg-surface/30 flex items-center justify-between text-xs font-mono text-mute-2">
+        <span>847 words · 5,140 characters</span>
+        <span>Saved 2s ago</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code -->
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pb-24">
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-4">
+      Code
+    </p>
+    <CodeBlock code={code} lang="tsx" filename="post-editor.tsx" />
+  </section>
+</BaseLayout>

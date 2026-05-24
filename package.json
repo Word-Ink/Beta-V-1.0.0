@@ -1,0 +1,51 @@
+{
+  "name": "wordink",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "The document editor you copy into your codebase. Headless, themeable, plugin-based.",
+  "author": "Cyber Squad Inc. (https://cybersquadinc.com)",
+  "license": "MIT",
+  "homepage": "https://wordink.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Word-Ink/Beta-V-1.0.0.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Word-Ink/Beta-V-1.0.0/issues"
+  },
+  "keywords": [
+    "rich-text-editor",
+    "wysiwyg",
+    "document-editor",
+    "contenteditable",
+    "react",
+    "astro",
+    "headless"
+  ],
+  "engines": {
+    "node": ">=18.17.1"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/react": "^3.6.3",
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/geist-mono": "^5.2.8",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7",
+    "astro": "^4.16.18",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

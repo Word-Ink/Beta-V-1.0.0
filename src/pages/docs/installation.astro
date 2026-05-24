@@ -1,0 +1,116 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const fileTree = `src/components/editor/
+├── core/
+│   ├── use-editor.ts      // useEditor() hook
+│   ├── commands.ts        // bold(), italic(), insertLink(), …
+│   ├── selection.ts       // selection capture / restore
+│   ├── serialise.ts       // HTML in/out
+│   └── types.ts
+├── editor.tsx             // <Editor> shell — contentEditable + commit
+├── toolbar/
+│   ├── toolbar.tsx
+│   ├── button.tsx
+│   ├── dropdown.tsx
+│   ├── color-picker.tsx
+│   └── separator.tsx
+└── index.tsx              // public re-exports`;
+
+const minimalUsage = `import { useState } from "react";
+import { useEditor, Editor, Toolbar } from "@/components/editor";
+
+export function HelloEditor() {
+  const [html, setHtml] = useState("<p>Hello, world.</p>");
+  const editor = useEditor({ value: html, onChange: setHtml });
+
+  return (
+    <Editor instance={editor}>
+      <Toolbar>
+        <Toolbar.Button cmd="bold" />
+        <Toolbar.Button cmd="italic" />
+        <Toolbar.Button cmd="underline" />
+      </Toolbar>
+      <Editor.Content />
+    </Editor>
+  );
+}`;
+
+const addPlugins = `<Toolbar.Button cmd="link" />
+<Toolbar.ColorPicker cmd="foreColor" />`;
+---
+
+<DocsLayout
+  title="Installation"
+  section="Getting started"
+  description="Install wordink with a single npx command. The source drops into your repo."
+>
+  <p>
+    wordink installs by copying source files into your repo. There's no npm
+    package to add to your dependencies.
+  </p>
+
+  <h2>Prerequisites</h2>
+
+  <ul>
+    <li>React 18 or 19</li>
+    <li>TypeScript (recommended) or modern JavaScript</li>
+    <li>
+      Tailwind CSS v3 or v4 (the styles use CSS variables, so adapting to
+      other systems is straightforward)
+    </li>
+  </ul>
+
+  <h2>One-line install</h2>
+
+  <CodeBlock code="npx wordink add editor" lang="bash" filename="terminal" />
+
+  <p>
+    This drops the editor source into <code>src/components/editor/</code> in your
+    project. The exact files:
+  </p>
+
+  <CodeBlock code={fileTree} lang="text" filename="src/components/editor/" />
+
+  <p>
+    The CLI also patches your <code>tailwind.config.ts</code> to include the
+    editor directory in <code>content</code>, and (optionally) writes a starter
+    theme file to your global CSS.
+  </p>
+
+  <h2>First render</h2>
+
+  <p>The minimal usage:</p>
+
+  <CodeBlock code={minimalUsage} lang="tsx" filename="hello-editor.tsx" />
+
+  <p>
+    That's everything you need to render an editable surface with a working
+    toolbar.
+  </p>
+
+  <h2>Adding plugins</h2>
+
+  <p>
+    Most plugins ship inside the core install. Add the link popover and color
+    picker to your toolbar with one line each:
+  </p>
+
+  <CodeBlock code={addPlugins} lang="tsx" filename="toolbar-extras.tsx" />
+
+  <p>
+    See the <a href="/docs/plugins">Plugins reference</a> for the full list.
+  </p>
+
+  <h2>Next steps</h2>
+
+  <ul>
+    <li>
+      <a href="/docs/theming">Theming</a> — make the editor match your design system
+    </li>
+    <li>
+      <a href="/docs/editor">Editor API</a> — the full surface area of the core editor
+    </li>
+  </ul>
+</DocsLayout>

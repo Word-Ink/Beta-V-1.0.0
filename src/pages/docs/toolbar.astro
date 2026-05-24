@@ -1,0 +1,136 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const shell = `<Toolbar>
+  <Toolbar.Group>...</Toolbar.Group>
+  <Toolbar.Separator />
+  <Toolbar.Group>...</Toolbar.Group>
+</Toolbar>`;
+
+const buttons = `<Toolbar.Button cmd="bold" />
+<Toolbar.Button cmd="italic" />
+<Toolbar.Button cmd="formatBlock" value="h2" icon={H2Icon} label="Heading 2" />`;
+
+const customButton = `import { useEditorContext } from "@/components/editor";
+import { Button } from "@/components/ui/button";
+
+function MyBoldButton() {
+  const editor = useEditorContext();
+  return (
+    <Button
+      variant={editor.is("bold") ? "default" : "ghost"}
+      onClick={() => editor.run("bold")}
+    >
+      Bold
+    </Button>
+  );
+}`;
+
+const dropdown = `<Toolbar.Dropdown
+  cmd="fontSize"
+  options={[
+    { value: "12px", label: "12" },
+    { value: "14px", label: "14" },
+    { value: "16px", label: "16" },
+    { value: "20px", label: "20" },
+  ]}
+/>`;
+
+const colorPicker = `<Toolbar.ColorPicker
+  cmd="foreColor"
+  swatches={["#22d3ee", "#34d399", "#f59e0b", "#ec4899"]}
+/>`;
+
+const full = `<Toolbar>
+  <Toolbar.Group>
+    <Toolbar.Button cmd="bold" />
+    <Toolbar.Button cmd="italic" />
+    <Toolbar.Button cmd="underline" />
+  </Toolbar.Group>
+  <Toolbar.Separator />
+  <Toolbar.Group>
+    <Toolbar.Dropdown cmd="formatBlock" options={BLOCK_OPTIONS} />
+    <Toolbar.Dropdown cmd="fontSize" options={SIZE_OPTIONS} />
+  </Toolbar.Group>
+  <Toolbar.Separator />
+  <Toolbar.ColorPicker cmd="foreColor" />
+  <Toolbar.ColorPicker cmd="backColor" />
+  <Toolbar.Separator />
+  <Toolbar.Button cmd="link" />
+  <Toolbar.Button cmd="image" />
+  <Toolbar.Separator />
+  <Toolbar.Button cmd="undo" />
+  <Toolbar.Button cmd="redo" />
+</Toolbar>`;
+---
+
+<DocsLayout
+  title="Toolbar primitives"
+  section="Using it"
+  description="Headless toolbar components — buttons, dropdowns, color pickers, separators. Compose your own UI."
+>
+  <p>
+    The toolbar primitives are optional. Use them to build a toolbar quickly,
+    or skip them entirely and wire commands into your own UI library.
+  </p>
+
+  <h2>The shell</h2>
+
+  <CodeBlock code={shell} lang="tsx" />
+
+  <p>
+    <code>&lt;Toolbar&gt;</code> renders a horizontal flex container with sensible
+    spacing. <code>&lt;Toolbar.Group&gt;</code> groups related buttons with internal
+    connector borders. <code>&lt;Toolbar.Separator&gt;</code> draws a vertical 1px
+    line.
+  </p>
+
+  <h2>Button</h2>
+
+  <CodeBlock code={buttons} lang="tsx" />
+
+  <p>
+    The Button reads the editor's <code>is(cmd)</code> state to render its active
+    style. If you don't provide an icon, it defaults to the built-in Lucide icon
+    set per command.
+  </p>
+
+  <h3>Custom button</h3>
+
+  <p>
+    If you want to use your own component (Shadcn, Radix, anything):
+  </p>
+
+  <CodeBlock code={customButton} lang="tsx" />
+
+  <h2>Dropdown</h2>
+
+  <CodeBlock code={dropdown} lang="tsx" />
+
+  <p>
+    The Dropdown shows the current value (read via <code>editor.value(cmd)</code
+    >) and dispatches the selected option.
+  </p>
+
+  <h2>ColorPicker</h2>
+
+  <CodeBlock code={colorPicker} lang="tsx" />
+
+  <p>
+    Opens a Photoshop-style picker with HSV square, hue slider, hex input, RGB
+    inputs, and a swatches strip. Pass your own palette via the <code
+      >swatches</code
+    > prop.
+  </p>
+
+  <h2>Full composition example</h2>
+
+  <CodeBlock code={full} lang="tsx" />
+
+  <h2>Next steps</h2>
+
+  <ul>
+    <li><a href="/docs/plugins">Plugins</a> — link popover, image picker, and beyond</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,120 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const linkButton = `<Toolbar.Button cmd="link" />`;
+const imageButton = `<Toolbar.Button cmd="image" />`;
+const colorPickers = `<Toolbar.ColorPicker cmd="foreColor" swatches={MY_PALETTE} />
+<Toolbar.ColorPicker cmd="backColor" swatches={MY_PALETTE} />`;
+
+const plugin = `// src/components/editor/plugins/uppercase.ts
+import { defineCommand } from "@/components/editor";
+
+export const uppercase = defineCommand({
+  name: "uppercase",
+  run(editor) {
+    const range = editor.getSelection();
+    if (!range || range.collapsed) return;
+    const text = range.toString();
+    document.execCommand("insertText", false, text.toUpperCase());
+  },
+  is() {
+    return false;
+  },
+});`;
+
+const register = `import { registerCommand } from "@/components/editor";
+import { uppercase } from "@/components/editor/plugins/uppercase";
+
+registerCommand(uppercase);`;
+---
+
+<DocsLayout
+  title="Plugins"
+  section="Extending it"
+  description="Built-in plugins (link, image, color), the upcoming roadmap, and how to write your own."
+>
+  <p>
+    Plugins extend the editor's command set. Most plugins ship in the core
+    install — you opt them in by mounting their UI in your toolbar.
+  </p>
+
+  <h2>Shipped</h2>
+
+  <h3>Link</h3>
+
+  <p>
+    Inline popover that lets the user paste a URL, toggle <code
+      >target="_blank"</code
+    >, edit existing links, and remove them. Triggered by <code>⌘K</code>, the
+    toolbar button, or clicking an existing link.
+  </p>
+
+  <CodeBlock code={linkButton} lang="tsx" />
+
+  <h3>Image</h3>
+
+  <p>
+    URL paste today. Drag-and-drop upload with an <code>onUpload</code> callback
+    is in development.
+  </p>
+
+  <CodeBlock code={imageButton} lang="tsx" />
+
+  <h3>Color picker</h3>
+
+  <p>
+    Photoshop-style picker (HSV square + hue slider + hex + RGB inputs +
+    swatches). Used for text color and highlight color.
+  </p>
+
+  <CodeBlock code={colorPickers} lang="tsx" />
+
+  <h3>Format & alignment</h3>
+
+  <p>
+    Block format (P, H1, H2, H3, blockquote, code block), text alignment
+    (left, center, right, justify), lists (bullet, numbered), indentation.
+    These are part of the core editor and have no separate plugin file.
+  </p>
+
+  <h2>Coming soon</h2>
+
+  <ul>
+    <li><strong>Tables</strong> — insert, add rows / columns, merge cells</li>
+    <li>
+      <strong>Slash menu</strong> — type <code>/</code> to insert any block, Notion-style
+    </li>
+    <li><strong>Bubble menu</strong> — selection-anchored formatting popup</li>
+    <li>
+      <strong>Mentions</strong> — <code>@</code>-tagging with a custom data source
+    </li>
+    <li><strong>Math</strong> — KaTeX rendering for inline and block math</li>
+    <li><strong>Footnotes</strong> — for academic and long-form writing</li>
+  </ul>
+
+  <h2>Writing your own plugin</h2>
+
+  <p>
+    A plugin is two things: one or more commands registered with the editor,
+    and (optionally) a piece of UI that calls them.
+  </p>
+
+  <CodeBlock code={plugin} lang="tsx" />
+
+  <p>Register it once at app startup:</p>
+
+  <CodeBlock code={register} lang="tsx" />
+
+  <p>
+    From that point on, <code>editor.run("uppercase")</code> works anywhere, and
+    <code>&lt;Toolbar.Button cmd="uppercase" /&gt;</code> renders a button for it.
+  </p>
+
+  <h2>Next steps</h2>
+
+  <p>
+    That's the docs for now. Try the <a href="/playground">playground</a>, or browse
+    the <a href="/examples">examples</a> for full-page templates.
+  </p>
+</DocsLayout>

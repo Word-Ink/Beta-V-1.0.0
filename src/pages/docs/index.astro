@@ -1,0 +1,100 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+---
+
+<DocsLayout
+  title="Introduction"
+  section="Getting started"
+  description="wordink is a document editor you copy into your codebase — aiming to do everything Google Docs and Microsoft Word can do, as source you own."
+>
+  <p>
+    wordink is a <strong>document editor</strong> you copy into your codebase
+    — aiming to do everything Google Docs and Microsoft Word can do, as
+    source code that lives in your repo.
+  </p>
+
+  <p>
+    It's built on the browser's native <code>contentEditable</code> attribute
+    and the Selection / Range API — nothing more. No ProseMirror schema. No
+    custom document model. No virtual DOM for the editor surface. The output
+    is plain HTML.
+  </p>
+
+  <p>
+    It's <strong>headless</strong>: the editor ships behaviour, you ship UI.
+    The provided toolbar primitives are optional — you can mount the editor
+    without any toolbar and call commands directly from your own UI. Drop the
+    source files into your project, theme them with CSS variables, and the
+    editor lives inside your design system instead of beside it.
+  </p>
+
+  <p>
+    See the <a href="/">homepage capabilities matrix</a> for the full list of
+    document features — shipped today and on the roadmap.
+  </p>
+
+  <h2>Philosophy</h2>
+
+  <p>
+    Most rich-text editors are libraries you depend on. wordink is a folder
+    you own.
+  </p>
+
+  <p>
+    When you run <code>npx wordink add editor</code>, the source files land in
+    <code>src/components/editor/</code> in your project. From that moment, the
+    code is yours. You read it. You modify it. You delete the parts you don't
+    want. There's no opaque dependency tree to fight when you need to change a
+    behaviour.
+  </p>
+
+  <p>This is the Shadcn model applied to rich text editing.</p>
+
+  <h2>What's included</h2>
+
+  <ul>
+    <li>
+      <strong>Core editor</strong> — contentEditable surface with selection
+      capture, command dispatch, undo/redo, paste sanitisation, keyboard
+      shortcuts.
+    </li>
+    <li>
+      <strong>Toolbar primitives</strong> — headless components for buttons,
+      dropdowns, color pickers, separators.
+    </li>
+    <li>
+      <strong>Shipped plugins</strong> — link, image (URL), color picker, font
+      family / size, alignment, lists, code blocks, quotes.
+    </li>
+    <li>
+      <strong>Design tokens</strong> — every color, font, and radius is a CSS
+      variable.
+    </li>
+  </ul>
+
+  <h2>Who this is for</h2>
+
+  <p>Use wordink if you want:</p>
+
+  <ul>
+    <li>A rich text editor that fits your design system perfectly</li>
+    <li>Full control over the editor's behaviour without writing one from scratch</li>
+    <li>To ship the smallest possible bundle (only the parts you use)</li>
+    <li>To learn how a rich-text editor works by reading code that's right there</li>
+  </ul>
+
+  <p>Use something else (Tiptap, Lexical, Slate) if you want:</p>
+
+  <ul>
+    <li>Collaborative editing with operational transforms or CRDTs</li>
+    <li>A schema-validated document model with custom node types</li>
+    <li>To never look at editor source code</li>
+  </ul>
+
+  <h2>Next steps</h2>
+
+  <p>
+    <a href="/docs/installation">Install wordink</a> in your project — five files,
+    one command.
+  </p>
+</DocsLayout>

@@ -1,0 +1,30 @@
+---
+// Thin top progress bar — width tracks scroll position.
+---
+
+<div
+  data-scroll-progress
+  class="fixed top-0 left-0 right-0 h-0.5 z-50 pointer-events-none"
+>
+  <div
+    data-scroll-fill
+    class="h-full bg-brand origin-left scale-x-0 transition-transform duration-100 ease-out shadow-[0_0_8px_var(--color-brand)]"
+  ></div>
+</div>
+
+<script>
+  const fill = document.querySelector(
+    "[data-scroll-fill]",
+  ) as HTMLDivElement | null;
+  if (fill) {
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? h.scrollTop / max : 0;
+      fill.style.transform = `scaleX(${pct})`;
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+  }
+</script>

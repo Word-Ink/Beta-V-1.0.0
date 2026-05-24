@@ -1,0 +1,154 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const code = `import { useState } from "react";
+import { useEditor, Editor, Toolbar } from "@/components/editor";
+
+const BLOCKS = [
+  { value: "p",          label: "Text" },
+  { value: "h1",         label: "Title" },
+  { value: "h2",         label: "Section" },
+  { value: "h3",         label: "Subsection" },
+  { value: "pre",        label: "Code block" },
+  { value: "blockquote", label: "Callout" },
+];
+
+export function DocsEditor() {
+  const [html, setHtml] = useState("");
+  const editor = useEditor({
+    value: html,
+    onChange: setHtml,
+    placeholder: "Start typing, or press / for blocks…",
+    minRows: 20,
+  });
+
+  return (
+    <Editor instance={editor}>
+      <Toolbar>
+        <Toolbar.Dropdown cmd="formatBlock" options={BLOCKS} />
+        <Toolbar.Separator />
+        <Toolbar.Group>
+          <Toolbar.Button cmd="bold" />
+          <Toolbar.Button cmd="italic" />
+          <Toolbar.Button cmd="code" />
+        </Toolbar.Group>
+        <Toolbar.Separator />
+        <Toolbar.Button cmd="link" />
+        <Toolbar.Button cmd="formatBlock" value="pre" label="Code block" />
+        <Toolbar.Button cmd="formatBlock" value="blockquote" label="Callout" />
+      </Toolbar>
+
+      <Editor.Content />
+    </Editor>
+  );
+}`;
+---
+
+<BaseLayout
+  title="Documentation editor — wordink examples"
+  description="Editor template optimised for technical writing — code blocks, callouts, anchored headings."
+>
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-20 pb-8">
+    <a
+      href="/examples"
+      class="text-mute hover:text-ink text-sm font-mono mb-6 inline-flex items-center gap-2 transition-colors"
+    >
+      ← Examples
+    </a>
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-3">
+      Template
+    </p>
+    <h1 class="text-5xl font-semibold tracking-tighter mb-4 leading-tight">
+      Documentation editor
+    </h1>
+    <p class="text-lg text-mute max-w-2xl leading-relaxed">
+      Built for technical writing. Syntax-highlighted code blocks, callouts,
+      slash commands for fast block insertion, anchored headings for deep
+      links.
+    </p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pb-12">
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-4">
+      Preview
+    </p>
+    <div class="border border-line rounded-lg overflow-hidden bg-bg">
+      <!-- Toolbar -->
+      <div class="flex items-center gap-1 p-2 border-b border-line bg-surface/60 flex-wrap">
+        <button class="px-3 py-1.5 rounded text-sm bg-surface-2 border border-line text-mute hover:text-ink font-mono">
+          Section
+        </button>
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded text-sm font-bold hover:bg-surface flex items-center justify-center">B</button>
+        <button class="w-8 h-8 rounded text-sm italic hover:bg-surface flex items-center justify-center">I</button>
+        <button class="w-8 h-8 rounded text-sm font-mono hover:bg-surface flex items-center justify-center">{"<>"}</button>
+        <span class="w-px h-5 bg-line mx-1"></span>
+        <button class="w-8 h-8 rounded text-mute hover:bg-surface flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
+        <button class="px-2.5 py-1.5 rounded text-xs hover:bg-surface flex items-center gap-1.5 text-mute hover:text-ink font-mono">
+          <span>{"<>"}</span> Code block
+        </button>
+        <button class="px-2.5 py-1.5 rounded text-xs hover:bg-surface flex items-center gap-1.5 text-mute hover:text-ink font-mono">
+          <span>!</span> Callout
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="p-10 max-w-3xl mx-auto">
+        <h1 class="text-3xl font-semibold tracking-tight text-ink mb-2">
+          Configuring the link plugin
+        </h1>
+        <p class="text-mute-2 text-sm font-mono mb-8">Plugins › Link</p>
+
+        <p class="text-ink leading-relaxed mb-6 text-[16px]">
+          The link plugin accepts a small set of options. The most useful one
+          is <code class="text-ink bg-surface border border-line px-1.5 py-0.5 rounded text-sm font-mono">protocols</code>,
+          which controls which URL schemes the popover will accept.
+        </p>
+
+        <h2 class="text-xl font-semibold tracking-tight text-ink mt-10 mb-4">
+          Default behaviour
+        </h2>
+        <p class="text-ink leading-relaxed mb-6 text-[16px]">
+          By default, only <code class="text-ink bg-surface border border-line px-1.5 py-0.5 rounded text-sm font-mono">http</code> and
+          <code class="text-ink bg-surface border border-line px-1.5 py-0.5 rounded text-sm font-mono">https</code> URLs are accepted.
+          Other protocols are rejected silently.
+        </p>
+
+        <h2 class="text-xl font-semibold tracking-tight text-ink mt-10 mb-4">
+          Adding mailto and tel
+        </h2>
+        <pre class="bg-surface border border-line rounded-md p-4 text-xs font-mono mb-4 overflow-x-auto"><code><span class="text-mute-2">// src/components/editor/plugins/link.ts</span>
+<span class="text-brand">export const</span> link = <span class="text-brand">defineCommand</span>({"{"}
+  name: <span class="text-ink">"link"</span>,
+  options: {"{"} protocols: [<span class="text-ink">"http"</span>, <span class="text-ink">"https"</span>, <span class="text-ink">"mailto"</span>, <span class="text-ink">"tel"</span>] {"}"},
+{"}"});</code></pre>
+
+        <!-- Callout -->
+        <div class="border-l-2 border-brand bg-brand/5 pl-4 py-3 my-6 rounded-r">
+          <p class="font-mono text-xs uppercase tracking-wider text-brand mb-1">Note</p>
+          <p class="text-ink text-[15px] leading-relaxed">
+            Non-http(s) protocols are not sanitised. Make sure you trust the
+            source of the content you render.
+          </p>
+        </div>
+
+        <p class="text-ink leading-relaxed mb-2 text-[16px]">
+          With this config, the link popover will accept any URL beginning
+          with the listed protocols.
+        </p>
+
+        <p class="text-mute-2 text-sm font-mono">
+          <span class="text-brand">|</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pb-24">
+    <p class="font-mono text-xs uppercase tracking-[0.12em] text-mute mb-4">Code</p>
+    <CodeBlock code={code} lang="tsx" filename="docs-editor.tsx" />
+  </section>
+</BaseLayout>
