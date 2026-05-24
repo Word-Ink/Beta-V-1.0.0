@@ -1,28 +1,86 @@
-<div align="center">
-
 # wordink
 
 **The document editor you copy into your codebase.**
 
-A headless, document-grade rich-text editor built on `contentEditable` and the
-Selection / Range API — no third-party editor framework, no opaque dependency.
-Themeable with CSS variables, plugin-based, and the source lives in **your**
-repo.
+A headless, document-grade rich-text editor built on `contentEditable` and
+the Selection / Range API — no third-party editor framework. Themeable with
+CSS variables, plugin-based, source-owned.
 
 [Live site](https://wordink.dev) · [Playground](https://wordink.dev/playground) ·
-[Docs](https://wordink.dev/docs) · [Compare](https://wordink.dev/compare)
+[Docs](https://wordink.dev/docs) · [Compare vs Google Docs / Word](https://wordink.dev/compare)
 
-</div>
+## Install
 
----
+```bash
+npm install wordink
+```
 
-## Status
+Peer dependencies: `react@18+`, `react-dom@18+`.
 
-**v0.1.0 — early access.** The editor and the marketing site live in this
-repo. Aiming for Google Docs / Microsoft Word feature parity, shipped as
-source you own.
+## Use
 
-## What ships today
+```tsx
+"use client";
+
+import { useState } from "react";
+import { RichTextEditor } from "wordink";
+
+export function PostEditor() {
+  const [html, setHtml] = useState("");
+  return (
+    <RichTextEditor
+      value={html}
+      onChange={setHtml}
+      placeholder="Start writing…"
+      minRows={14}
+    />
+  );
+}
+```
+
+## Required CSS variables
+
+The editor renders its content inside `.rte-content`. Define these CSS
+variables in your global stylesheet (or via Tailwind v4 `@theme`):
+
+| Variable               | Used for                           |
+|------------------------|------------------------------------|
+| `--color-bg`           | Editor surface background          |
+| `--color-surface`      | Toolbar / popover background       |
+| `--color-line`         | Borders                            |
+| `--color-line-2`       | Hover borders                      |
+| `--color-ink`          | Body text                          |
+| `--color-mute`         | Secondary text                     |
+| `--color-mute-2`       | Placeholder, footer counts         |
+| `--color-brand`        | Active toolbar state, focus, links |
+| `--color-brand-deep`   | Primary CTA hover                  |
+| `--font-sans`          | Body font                          |
+| `--font-mono`          | Code blocks, inline code           |
+
+All required CSS ships in the package — just import it once in your app:
+
+```ts
+import "wordink/styles.css";
+```
+
+The stylesheet uses CSS-variable fallbacks, so the editor renders fine
+even if you haven't set the `--color-*` tokens above (it'll use the
+wordink defaults). Override the variables to theme it for your site.
+
+## Props
+
+| Prop          | Type                                                              | Default              | Description                                                       |
+|---------------|-------------------------------------------------------------------|----------------------|-------------------------------------------------------------------|
+| `value`       | `string`                                                          | —                    | HTML content (controlled).                                        |
+| `onChange`    | `(html: string) => void`                                          | —                    | Fires on every input.                                             |
+| `placeholder` | `string`                                                          | `"Start writing…"`   | Shown when empty.                                                 |
+| `minRows`     | `number`                                                          | `14`                 | Min-height (`minRows * 1.6rem`).                                  |
+| `variant`     | `"card" \| "embedded"`                                            | `"card"`             | `card` draws its own border. `embedded` drops it.                 |
+| `onPickImage` | `() => Promise<{ src; alt? } \| null> \| { src; alt? } \| null`  | —                    | Custom image picker. Falls back to `window.prompt` if absent.     |
+| `onUpload`    | `(file: File) => Promise<string> \| string`                       | —                    | Upload handler for paste/drop. Falls back to inline data URLs.    |
+| `className`   | `string`                                                          | —                    | Extra classes for the outer wrapper.                              |
+
+## Features
 
 Inline marks · headings 1 → 6 · font family + size · text colour · highlight ·
 alignment · lists · indent · blockquote · code block · links (with popover) ·
@@ -34,70 +92,8 @@ download HTML · print / save as PDF · fullscreen mode · live word + char
 counts · keyboard shortcuts (⌘B, ⌘I, ⌘U, ⌘K, ⌘Z, ⌘⇧Z, ⌘⇧7, ⌘⇧8).
 
 See the [comparison page](https://wordink.dev/compare) for the full
-feature-by-feature breakdown vs. Google Docs, MS Word, and Tiptap / Lexical.
-
-## Use it in your project
-
-Today: copy the editor folder into your repo (the wordink positioning).
-
-```bash
-# Copy the editor source
-cp -r src/components/editor /path/to/your/project/src/components/editor
-
-# Install the four runtime deps
-npm install react react-dom lucide-react clsx tailwind-merge
-```
-
-Then drop the `.rte-content`, `.rte-toc`, and (optionally) `.code-shell`
-blocks from `src/styles/global.css` into your project's global stylesheet,
-and render:
-
-```tsx
-"use client";
-import { useState } from "react";
-import { RichTextEditor } from "@/components/editor";
-
-export function PostEditor() {
-  const [html, setHtml] = useState("");
-  return (
-    <RichTextEditor
-      value={html}
-      onChange={setHtml}
-      placeholder="Start writing…"
-    />
-  );
-}
-```
-
-See [`src/components/editor/INSTALL.md`](./src/components/editor/INSTALL.md)
-for the full prop reference + required CSS variables.
-
-Other distribution paths (npm publish, GitHub install, shadcn-style CLI) are
-laid out in [`HOSTING.md`](./HOSTING.md).
-
-## Develop the site locally
-
-```bash
-npm install
-npm run dev    # http://localhost:4321
-```
-
-The repo contains both the marketing site (Astro) and the editor source
-(React, mounted as an Astro island on `/` and `/playground`).
-
-| Command           | Action                                  |
-| ----------------- | --------------------------------------- |
-| `npm run dev`     | Dev server with HMR at `localhost:4321` |
-| `npm run build`   | Static site build to `./dist/`          |
-| `npm run preview` | Preview the production build            |
-
-Stack: Astro 4 · React 18 · Tailwind v4 · Geist (Sans + Mono) ·
-`@fontsource-variable` · `lucide-react` icons.
+feature-by-feature breakdown.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
-
-## Credits
-
-Built and maintained by **[Cyber Squad Inc.](https://cybersquadinc.com)**
+[MIT](./LICENSE) — © 2026 [Cyber Squad Inc.](https://cybersquadinc.com)

@@ -1,9 +1,47 @@
 {
-  "name": "wordink-site",
-  "type": "module",
+  "name": "wordink",
   "version": "0.1.0",
-  "private": true,
-  "description": "Marketing site + docs for wordink. The publishable editor package lives in packages/editor.",
+  "description": "The document editor you copy into your codebase. Headless, themeable, plugin-based — built on contentEditable and the Selection API.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup && node -e \"require('fs').copyFileSync('src/styles.css','dist/styles.css')\"",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3"
+  },
   "author": "Cyber Squad Inc. (https://cybersquadinc.com)",
   "license": "MIT",
   "homepage": "https://wordink.dev",
@@ -19,34 +57,14 @@
     "wysiwyg",
     "document-editor",
     "contenteditable",
+    "html-editor",
     "react",
-    "astro",
-    "headless"
+    "react-component",
+    "headless",
+    "themeable",
+    "tsx"
   ],
   "engines": {
     "node": ">=18.17.1"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^3.1.9",
-    "@astrojs/react": "^3.6.3",
-    "@astrojs/sitemap": "^3.7.2",
-    "@fontsource-variable/geist": "^5.2.9",
-    "@fontsource-variable/geist-mono": "^5.2.8",
-    "@tailwindcss/vite": "^4.3.0",
-    "@types/react": "^18.3.29",
-    "@types/react-dom": "^18.3.7",
-    "astro": "^4.16.18",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.16.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.0"
   }
 }
