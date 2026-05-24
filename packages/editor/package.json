@@ -1,0 +1,71 @@
+{
+  "name": "wordink",
+  "version": "0.1.0",
+  "description": "The document editor you copy into your codebase. Headless, themeable, plugin-based — built on contentEditable and the Selection API.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup && node -e \"require('fs').copyFileSync('src/styles.css','dist/styles.css')\"",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3"
+  },
+  "author": "Cyber Squad Inc. (https://cybersquadinc.com)",
+  "license": "MIT",
+  "homepage": "https://wordink.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Word-Ink/Beta-V-1.0.0.git",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/Word-Ink/Beta-V-1.0.0/issues"
+  },
+  "keywords": [
+    "rich-text-editor",
+    "wysiwyg",
+    "document-editor",
+    "contenteditable",
+    "html-editor",
+    "react",
+    "react-component",
+    "headless",
+    "themeable",
+    "tsx"
+  ],
+  "engines": {
+    "node": ">=18.17.1"
+  }
+}

@@ -1,0 +1,234 @@
+/* wordink editor — content surface styles.
+ *
+ * Import once in your app:   import "wordink/styles.css";
+ *
+ * The editor uses CSS variables for theming — define them in your
+ * global stylesheet (or via Tailwind v4 @theme). Fallbacks below.
+ */
+
+.rte-content {
+  --rte-bg: var(--color-bg, #15131c);
+  --rte-surface: var(--color-surface, #1d1a26);
+  --rte-line: var(--color-line, #322d3d);
+  --rte-line-2: var(--color-line-2, #4a4358);
+  --rte-ink: var(--color-ink, #f4f1fa);
+  --rte-mute: var(--color-mute, #a8a3b5);
+  --rte-mute-2: var(--color-mute-2, #756f82);
+  --rte-brand: var(--color-brand, #22d3ee);
+  --rte-font-sans: var(--font-sans, system-ui, -apple-system, sans-serif);
+  --rte-font-mono: var(--font-mono, ui-monospace, "SF Mono", monospace);
+
+  padding: 1.25rem 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--rte-ink);
+  font-family: var(--rte-font-sans);
+}
+
+.rte-content[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--rte-mute-2);
+  pointer-events: none;
+  display: block;
+}
+
+.rte-content > * + * {
+  margin-top: 0.85em;
+}
+
+.rte-content h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--rte-ink);
+  margin-top: 1.2em;
+}
+
+.rte-content h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--rte-ink);
+  margin-top: 1.1em;
+}
+
+.rte-content h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--rte-ink);
+  margin-top: 1em;
+}
+
+.rte-content h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--rte-ink);
+  margin-top: 1em;
+}
+
+.rte-content h5 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--rte-ink);
+  margin-top: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rte-content h6 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--rte-mute);
+  margin-top: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rte-content p,
+.rte-content div {
+  color: var(--rte-ink);
+}
+
+.rte-content a {
+  color: var(--rte-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rte-content ul,
+.rte-content ol {
+  padding-left: 1.5rem;
+}
+
+.rte-content ul {
+  list-style: disc;
+}
+
+.rte-content ol {
+  list-style: decimal;
+}
+
+.rte-content li + li {
+  margin-top: 0.2em;
+}
+
+.rte-content blockquote {
+  border-left: 3px solid var(--rte-brand);
+  padding: 0.4em 0 0.4em 1em;
+  color: var(--rte-mute);
+  font-style: italic;
+  background: rgba(34, 211, 238, 0.06);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.rte-content pre {
+  background: var(--rte-bg);
+  border: 1px solid var(--rte-line);
+  padding: 0.85em 1em;
+  border-radius: 0.5rem;
+  font-family: var(--rte-font-mono);
+  font-size: 0.85em;
+  overflow-x: auto;
+  color: var(--rte-ink);
+}
+
+.rte-content code {
+  background: var(--rte-bg);
+  border: 1px solid var(--rte-line);
+  border-radius: 0.25rem;
+  padding: 0.05em 0.35em;
+  font-family: var(--rte-font-mono);
+  font-size: 0.85em;
+  color: var(--rte-ink);
+}
+
+.rte-content pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.rte-content hr {
+  border: 0;
+  border-top: 1px solid var(--rte-line);
+  margin: 1.5em 0;
+}
+
+.rte-content img,
+.rte-content img.rte-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 0.5em 0;
+}
+
+.rte-content table,
+.rte-content table.rte-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  border: 1px solid var(--rte-line-2);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.rte-content table thead {
+  background: var(--rte-surface);
+}
+
+.rte-content table th,
+.rte-content table td {
+  border: 1px solid var(--rte-line-2);
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+  min-width: 4rem;
+}
+
+.rte-content table th {
+  font-weight: 600;
+  color: var(--rte-ink);
+  font-size: 0.85em;
+}
+
+.rte-content table td {
+  color: var(--rte-ink);
+}
+
+/* TOC placeholder — rendered as a flat label inside the editor.
+   Consumers can swap [data-wordink-toc] on the public page for a
+   live list built from the H2 / H3 headings of the article. */
+.rte-content .rte-toc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85em 1em;
+  background: var(--rte-bg);
+  border: 1px dashed var(--rte-line);
+  border-left: 3px solid var(--rte-brand);
+  border-radius: 0.5rem;
+  color: var(--rte-mute);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0.6em 0;
+  user-select: none;
+}
+
+.rte-content .rte-toc::before {
+  content: "≡";
+  color: var(--rte-brand);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.rte-content .rte-toc::after {
+  content: " · TOC placeholder (renders as a list on the live page)";
+  color: var(--rte-mute-2);
+  font-weight: 400;
+  font-size: 0.6875rem;
+}

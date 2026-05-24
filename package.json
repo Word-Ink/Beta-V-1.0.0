@@ -1,8 +1,9 @@
 {
-  "name": "wordink",
+  "name": "wordink-site",
   "type": "module",
   "version": "0.1.0",
-  "description": "The document editor you copy into your codebase. Headless, themeable, plugin-based.",
+  "private": true,
+  "description": "Marketing site + docs for wordink. The publishable editor package lives in packages/editor.",
   "author": "Cyber Squad Inc. (https://cybersquadinc.com)",
   "license": "MIT",
   "homepage": "https://wordink.dev",
